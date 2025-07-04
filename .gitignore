@@ -1,0 +1,5 @@
+# Ignore Questions directory
+Questions/
+
+# macOS system files
+.DS_Store 
