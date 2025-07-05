@@ -42,6 +42,8 @@ SVGBench evaluates how well language models can code and reason with physical co
 
 ## Installation
 
+**Note:** This benchmark has only been tested on macOS.
+
 ### Prerequisites
 
 - Python 3
