@@ -4,6 +4,19 @@ import platform
 # Class to render SVG code to a file
 class SVGRenderer:
 
+    # Function to set up general environment variables to suppress warnings
+    @staticmethod
+    def setup_environment():
+        """
+        Set up general environment variables to suppress Inkscape warnings.
+        """
+        # Suppress Inkscape warnings and output
+        os.environ['INKSCAPE_PROFILE_DIR'] = '/dev/null'
+        os.environ['G_MESSAGES_DEBUG'] = 'none'
+        # Suppress GTK warnings
+        os.environ['G_SLICE'] = 'always-malloc'
+        os.environ['G_DEBUG'] = 'gc-friendly'
+
     # Function to set up macOS environment variables for ImageMagick
     @staticmethod
     def setup_macos_environment():
@@ -18,6 +31,12 @@ class SVGRenderer:
                 os.environ['DYLD_LIBRARY_PATH'] = f'/opt/homebrew/opt/imagemagick/lib:{current_dyld_path}'
             else:
                 os.environ['DYLD_LIBRARY_PATH'] = '/opt/homebrew/opt/imagemagick/lib'
+            
+            # Set ImageMagick configuration path
+            os.environ['MAGICK_CONFIGURE_PATH'] = '/opt/homebrew/etc/ImageMagick-7'
+        
+        # Set up general environment variables
+        SVGRenderer.setup_environment()
 
     # Function to check if ImageMagick is installed
     @staticmethod
@@ -50,32 +69,80 @@ class SVGRenderer:
     @staticmethod
     def render_svg(code: str, directory_path: str, filename: str):
         """
-        Render SVG code using Wand and save to specified path as PNG.
+        Render SVG code using Selenium and save to specified path as PNG.
         
         Args:
             code (str): SVG code as a string
             directory_path (str): Directory path where the file should be saved
             filename (str): Name of the file (without extension)
         """
-        # Set up macOS environment variables first
-        SVGRenderer.setup_macos_environment()
-        # Check if ImageMagick is installed
-        if not SVGRenderer.check_imagemagick():
-            # Install ImageMagick if not installed
-            SVGRenderer.install_imagemagick()
-            # Set up environment again after installation
-            SVGRenderer.setup_macos_environment()
-        # Now import Wand after environment is set up
-        from wand.image import Image
-        from wand.color import Color
         # Ensure the directory exists
         os.makedirs(directory_path, exist_ok=True)
+        
         # Create the full file path with extension
         file_path = os.path.join(directory_path, f"{filename}.png")
-        # Convert SVG to PNG using Wand
-        with Image(blob=code.encode('utf-8'), format='svg') as img:
-            img.format = 'png'
-            img.save(filename=file_path)
+        
+        # Use the Selenium implementation
+        SVGRenderer.svg_to_png_selenium(code, file_path)
+
+    @staticmethod
+    def svg_to_png_selenium(svg_code, output_path, width=800, height=600):
+        """
+        Convert SVG code to PNG using Selenium with headless browser.
+        
+        Args:
+            svg_code (str): The SVG code as a string
+            output_path (str): Path where the PNG should be saved
+            width (int): Browser width
+            height (int): Browser height
+        """
+        try:
+            from selenium import webdriver
+            from selenium.webdriver.chrome.options import Options
+            import base64
+            import tempfile
+            import os
+        except ImportError:
+            raise ImportError("Please install selenium: pip install selenium")
+        
+        # Create HTML with embedded SVG
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ margin: 0; padding: 0; }}
+                svg {{ display: block; }}
+            </style>
+        </head>
+        <body>
+            {svg_code}
+        </body>
+        </html>
+        """
+        
+        # Setup Chrome options
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument(f'--window-size={width},{height}')
+        
+        # Create temporary HTML file
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.html', delete=False) as temp_html:
+            temp_html.write(html_content)
+            temp_html_path = temp_html.name
+        
+        try:
+            # Launch browser and take screenshot
+            driver = webdriver.Chrome(options=chrome_options)
+            driver.get(f'file://{os.path.abspath(temp_html_path)}')
+            driver.save_screenshot(output_path)
+            driver.quit()
+            
+        finally:
+            # Clean up
+            os.unlink(temp_html_path)
 
 # Example usage
 if __name__ == "__main__":

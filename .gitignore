@@ -1,6 +1,8 @@
 # Ignore Questions directory
-Questions/
+questions/
+# Ignore Results directory
+results/
+# Ignore .env file
+.env 
 # macOS system files
 .DS_Store 
-# Environment variables
-.env 
