@@ -4,6 +4,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 import time
+from tqdm import tqdm
 
 # Import the LLM and SVGRenderer classes
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -31,7 +32,7 @@ class Benchmark:
     def run(
             self,
             run_full_benchmark: bool = True,
-            max_workers: int = 20
+            max_workers: int = 25
     ):
         # Load questions JSON
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -51,7 +52,14 @@ class Benchmark:
             "question_scores": [],
             "average_score": 0.0
         }
-        # Run questions in parallel with max 10 workers
+        # Initialize progress bar
+        progress_bar = tqdm(
+            total=len(questions), 
+            desc="Running benchmark", 
+            unit="questions",
+            ncols=100
+        )
+        # Run questions in parallel with max workers
         with ThreadPoolExecutor(
             max_workers=max_workers
         ) as executor:
@@ -71,9 +79,8 @@ class Benchmark:
                         "requirements": question["requirements"],
                         "score": score
                     })
-                    print(f"Completed question {index} with score: {score}")
                 except Exception as e:
-                    print(f"Failed to complete question {index} after retries: {e}")
+                    progress_bar.write(f"Failed to complete question {index} after retries: {e}")
                     results["question_scores"].append({
                         "question_index": index,
                         "prompt": question["prompt"],
@@ -81,23 +88,23 @@ class Benchmark:
                         "score": 0.0,
                         "error": str(e)
                     })
-        
+                finally:
+                    progress_bar.update(1)
+        # Close the progress bar
+        progress_bar.close()
         # Sort results by question index to maintain order
         results["question_scores"].sort(key=lambda x: x["question_index"])
-        
         # Calculate average score
         total_score = sum(item["score"] for item in results["question_scores"])
         results["average_score"] = total_score / len(results["question_scores"]) if results["question_scores"] else 0.0
-        
         # Save results to JSON file
         results_file_path = os.path.join(results_dir, "benchmark_results.json")
         with open(results_file_path, "w") as file:
             json.dump(results, file, indent=2)
-        
+        # Print & return results
         print(f"\nBenchmark completed!")
         print(f"Average score: {results['average_score']:.3f}")
         print(f"Results saved to: {results_file_path}")
-        
         return results
 
     # Function to run a single question with retry logic
@@ -111,7 +118,7 @@ class Benchmark:
             try:
                 return self.run_question(question, index)
             except Exception as e:
-                print(f"Error running question {index} (attempt {attempt + 1}): {e}")
+                tqdm.write(f"Error running question {index} (attempt {attempt + 1}): {e}")
                 if attempt == 2:  # Last attempt
                     # Return score of 0 if failed
                     return 0.0
@@ -173,8 +180,8 @@ Requirements:
                 else:
                     raise ValueError("No SVG code found in response")
         except Exception as e:
-            print(f"Error extracting SVG code for question {index}: {e}")
-            print(f"Full response: {text}")
+            tqdm.write(f"Error extracting SVG code for question {index}: {e}")
+            tqdm.write(f"Full response: {text}")
             # Throw an error
             raise ValueError("Error extracting SVG code")
         # Create the results directory if it doesn't exist
@@ -182,7 +189,6 @@ Requirements:
         os.makedirs(results_dir, exist_ok=True)
         # Render the SVG code to an image
         SVGRenderer.render_svg(svg_code, results_dir, f"question_{index}")
-        print(f"Generated SVG for question {index}")
         # Save the SVG code to a file
         with open(f"{results_dir}/question_{index}.svg", "w") as file:
             file.write(svg_code)
@@ -208,7 +214,7 @@ Requirements:
 """
         # Init evaluator LLM
         evaluator_llm = LLM(
-            model="google/gemini-2.5-pro",
+            model="google/gemini-2.5-flash",
             endpoint="https://openrouter.ai/api/v1",
             api_key=self.open_router_api_key
         )
@@ -248,9 +254,9 @@ if __name__ == "__main__":
     api_key = os.getenv("OPENROUTER_API_KEY")
     # Create an instance of the Benchmark class
     benchmark = Benchmark(
-        model="google/gemini-2.5-pro",
+        model="qwen/qwen3-30b-a3b",
         endpoint="https://openrouter.ai/api/v1",
         api_key=api_key
     )
     # Run the benchmark
-    benchmark.run(run_full_benchmark=False)
+    benchmark.run(run_full_benchmark=True)
