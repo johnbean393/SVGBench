@@ -1,5 +1,6 @@
-# Ignore Results directory
-results/
+# Ignore Results directory except webUI
+results/*
+!results/webUI/
 # Ignore .env file
 .env 
 # macOS system files

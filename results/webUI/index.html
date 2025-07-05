@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVGBench - Benchmark Results Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>SVGBench Results</h1>
+            <p class="subtitle">AI Model Performance on SVG Generation Tasks</p>
+        </header>
+
+        <div class="controls">
+            <div class="model-selector">
+                <label for="model-select">Select Model:</label>
+                <select id="model-select">
+                    <option value="">Loading models...</option>
+                </select>
+            </div>
+            
+            <div class="view-toggle">
+                <button id="overview-btn" class="active">Overview</button>
+                <button id="detailed-btn">Detailed View</button>
+            </div>
+
+            <div class="filters">
+                <input type="text" id="search-input" placeholder="Search questions...">
+                <select id="score-filter">
+                    <option value="">All Scores</option>
+                    <option value="high">High (0.8+)</option>
+                    <option value="medium">Medium (0.5-0.8)</option>
+                    <option value="low">Low (0-0.5)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading benchmark results...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <p>Error loading benchmark results. Please try again.</p>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview-section" class="section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Questions</h3>
+                    <div class="stat-value" id="total-questions">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Score</h3>
+                    <div class="stat-value" id="average-score">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Duration</h3>
+                    <div class="stat-value" id="duration">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Model</h3>
+                    <div class="stat-value" id="model-name">-</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Score Distribution</h3>
+                <div id="score-chart" class="chart"></div>
+            </div>
+
+            <div class="comparison-container">
+                <h3>Model Comparison</h3>
+                <div id="comparison-chart" class="chart"></div>
+            </div>
+
+
+        </div>
+
+        <!-- Detailed View Section -->
+        <div id="detailed-section" class="section" style="display: none;">
+            <div class="questions-grid" id="questions-grid">
+                <!-- Questions will be populated here -->
+            </div>
+        </div>
+
+        <!-- Question Modal -->
+        <div id="question-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modal-header">
+                    <h2 id="modal-question-title">Question Details</h2>
+                    <div class="modal-score" id="modal-score">-</div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-prompt">
+                        <h3>Prompt</h3>
+                        <p id="modal-prompt-text">-</p>
+                    </div>
+                    <div class="modal-requirements">
+                        <h3>Requirements</h3>
+                        <ul id="modal-requirements-list">
+                            <!-- Requirements will be populated here -->
+                        </ul>
+                    </div>
+                    <div class="modal-result">
+                        <h3>Generated SVG</h3>
+                        <div class="svg-preview" id="modal-svg-preview">
+                            <!-- SVG will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

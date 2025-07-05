@@ -1,0 +1,22 @@
+{
+  "models": [
+    "anthropic-claude-sonnet-4",
+    "google-gemini-2.0-flash-001",
+    "google-gemini-2.0-flash-lite-001",
+    "google-gemini-2.5-flash",
+    "google-gemini-2.5-pro",
+    "meta-llama-llama-3.1-8b-instruct",
+    "meta-llama-llama-4-maverick",
+    "meta-llama-llama-4-scout",
+    "mistralai-mistral-small-3.2-24b-instruct",
+    "openai-gpt-4.1",
+    "openai-gpt-4.1-mini",
+    "openai-gpt-4.1-nano",
+    "openai-o3-mini",
+    "openai-o4-mini",
+    "qwen-qwen3-235b-a22b",
+    "qwen-qwen3-30b-a3b",
+    "qwen-qwen3-32b",
+    "x-ai-grok-3"
+  ]
+}
