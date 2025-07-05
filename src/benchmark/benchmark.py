@@ -3,10 +3,10 @@ import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
+import time
 
-# Add the src directory to the Python path
+# Import the LLM and SVGRenderer classes
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-
 from utils.llm import LLM
 from utils.svg_renderer import SVGRenderer
 
@@ -18,15 +18,20 @@ class Benchmark:
             self, 
             model: str, 
             endpoint: str, 
-            api_key: str
+            api_key: str,
+            open_router_api_key: str=None
     ):
         self.llm = LLM(model=model, endpoint=endpoint, api_key=api_key)
+        # If the OpenRouter API key is not provided, try the API key
+        self.open_router_api_key = open_router_api_key
+        if self.open_router_api_key is None:
+            self.open_router_api_key = api_key
 
     # Function to run a benchmark
     def run(
             self,
             run_full_benchmark: bool = True,
-            max_workers: int = 10
+            max_workers: int = 20
     ):
         # Load questions JSON
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -150,8 +155,28 @@ Requirements:
 """
         # Generate text from the image
         text = self.llm.generate_text(generate_prompt)
-        # Extract the SVG code from the text
-        svg_code = text.split("```svg")[1].split("```")[0]
+        # Extract the SVG code from the text with proper error handling
+        try:
+            if "```svg" in text:
+                svg_parts = text.split("```svg")
+                if len(svg_parts) > 1:
+                    svg_code = svg_parts[1].split("```")[0].strip()
+                else:
+                    raise ValueError("No SVG code block found after ```svg")
+            else:
+                # Try alternative extraction methods
+                if "<svg" in text and "</svg>" in text:
+                    # Extract SVG directly from the text
+                    start = text.find("<svg")
+                    end = text.find("</svg>") + 6
+                    svg_code = text[start:end].strip()
+                else:
+                    raise ValueError("No SVG code found in response")
+        except Exception as e:
+            print(f"Error extracting SVG code for question {index}: {e}")
+            print(f"Full response: {text}")
+            # Throw an error
+            raise ValueError("Error extracting SVG code")
         # Create the results directory if it doesn't exist
         results_dir = f"results/{self.llm.model.replace('/', '-')}"
         os.makedirs(results_dir, exist_ok=True)
@@ -170,35 +195,39 @@ Requirements:
             requirements: str, 
             requirements_num: int
     ) -> float:
-        # Get the SVG path
-        svg_path = f"results/{self.llm.model.replace('/', '-')}/question_{index}.svg"
+        # Get the PNG path
+        png_path = f"results/{self.llm.model.replace('/', '-')}/question_{index}.png"
         # Formulate prompt
         evaluate_prompt = f"""
-How many of the following {requirements_num} requirements were fulfilled? Respond with a number ONLY in the following JSON schema.
+Examine the generated image. How many of the following {requirements_num} requirements were fulfilled? 
 
-{{
-    "number_of_fulfilled_requirements": 3
-}}
+Respond with a number ONLY, and be strict about the requirements.
 
 Requirements:
 {requirements}
 """
         # Init evaluator LLM
         evaluator_llm = LLM(
-            model="gemini/gemini-2.5-pro",
+            model="google/gemini-2.5-pro",
             endpoint="https://openrouter.ai/api/v1",
-            api_key=api_key
+            api_key=self.open_router_api_key
         )
-        # Evaluate the SVG
-        json_response = self.llm.generate_text(
-            evaluate_prompt, 
+        # Evaluate the PNG
+        json_response = evaluator_llm.generate_text(
+            evaluate_prompt,
+            image_path=png_path, 
             json_schema={
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
                 "properties": {
                     "number_of_fulfilled_requirements": {
-                        "type": "number"
-                        }
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "The count of requirements that have been fulfilled"
                     }
+                },
+                "required": ["number_of_fulfilled_requirements"],
+                "additionalProperties": False
             }
         )
         # Parse the JSON response
