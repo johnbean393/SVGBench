@@ -253,19 +253,16 @@ class SVGRenderer:
         try:
             # Parse the SVG code
             root = ET.fromstring(svg_code.strip())
-            
             # First try to get explicit dimensions
             width = root.get('width')
             height = root.get('height')
             viewbox = root.get('viewBox')
-            
             # If we have explicit width/height, use them
             if width and height:
                 width_val = SVGRenderer._parse_dimension(width)
                 height_val = SVGRenderer._parse_dimension(height)
                 if width_val and height_val:
                     return (width_val, height_val)
-            
             # If we have viewBox, use it as the base
             if viewbox:
                 parts = viewbox.split()
@@ -294,10 +291,8 @@ class SVGRenderer:
                             return (int(vb_width), int(vb_height))
                     except (ValueError, IndexError):
                         pass
-            
             # If no viewBox, analyze elements directly
             min_x, min_y, max_x, max_y = SVGRenderer._analyze_svg_elements(root)
-            
             if min_x is not None and max_x is not None:
                 # Add some margin around the content
                 margin = 20
@@ -309,13 +304,11 @@ class SVGRenderer:
             # If XML parsing fails, try regex approach for basic dimensions
             try:
                 width_match = re.search(r'width\s*=\s*["\']?(\d+(?:\.\d+)?)["\']?', svg_code, re.IGNORECASE)
-                height_match = re.search(r'height\s*=\s*["\']?(\d+(?:\.\d+)?)["\']?', svg_code, re.IGNORECASE)
-                
+                height_match = re.search(r'height\s*=\s*["\']?(\d+(?:\.\d+)?)["\']?', svg_code, re.IGNORECASE) 
                 if width_match and height_match:
                     width_val = float(width_match.group(1))
                     height_val = float(height_match.group(1))
                     return (int(width_val), int(height_val))
-                
                 # Try viewBox with regex
                 viewbox_match = re.search(r'viewBox\s*=\s*["\']([^"\']+)["\']', svg_code, re.IGNORECASE)
                 if viewbox_match:
@@ -329,7 +322,6 @@ class SVGRenderer:
                             pass
             except Exception:
                 pass
-        
         # Final fallback
         return (800, 600)
 
@@ -458,10 +450,8 @@ class SVGRenderer:
             
             if len(coords) < 4:  # Need at least 2 points (4 coordinates)
                 return None
-            
             x_coords = coords[0::2]
             y_coords = coords[1::2]
-            
             return (min(x_coords), min(y_coords), max(x_coords), max(y_coords))
         except (ValueError, TypeError):
             return None
@@ -473,16 +463,13 @@ class SVGRenderer:
             d = elem.get('d', '')
             if not d:
                 return None
-            
             # Simple regex to extract numbers from path
             numbers = re.findall(r'-?\d+(?:\.\d+)?', d)
             if len(numbers) < 2:
                 return None
-            
             coords = [float(n) for n in numbers]
             x_coords = coords[0::2]
             y_coords = coords[1::2]
-            
             return (min(x_coords), min(y_coords), max(x_coords), max(y_coords))
         except (ValueError, TypeError):
             return None
@@ -500,11 +487,9 @@ class SVGRenderer:
                 font_size = float(re.search(r'\d+', str(font_size)).group())
             except:
                 font_size = 12
-            
             # Rough estimation: width = length * 0.6 * font_size, height = font_size
             width = len(text_content) * 0.6 * font_size
             height = font_size
-            
             return (x, y - height, x + width, y)
         except (ValueError, TypeError):
             return None
@@ -524,6 +509,5 @@ if __name__ == "__main__":
   </g>
 </svg>
 """
-    
     # Render the SVG code to a PNG file
     SVGRenderer.render_svg(svg_code, "assets", "test_image")

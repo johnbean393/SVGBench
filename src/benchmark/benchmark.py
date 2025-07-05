@@ -44,10 +44,12 @@ class Benchmark:
         # Create results directory
         results_dir = f"results/{self.llm.model.replace('/', '-')}"
         os.makedirs(results_dir, exist_ok=True)
+        # Record start time
+        start_time = datetime.now()
         # Initialize results tracking
         results = {
             "model": self.llm.model,
-            "timestamp": datetime.now().isoformat(),
+            "start_timestamp": start_time.isoformat(),
             "total_questions": len(questions),
             "question_scores": [],
             "average_score": 0.0
@@ -55,9 +57,9 @@ class Benchmark:
         # Initialize progress bar
         progress_bar = tqdm(
             total=len(questions), 
-            desc="Running benchmark", 
-            unit="questions",
-            ncols=100
+            desc=f"Running benchmark for {self.llm.model}", 
+            unit="question",
+            ncols=200
         )
         # Run questions in parallel with max workers
         with ThreadPoolExecutor(
@@ -97,12 +99,16 @@ class Benchmark:
         # Calculate average score
         total_score = sum(item["score"] for item in results["question_scores"])
         results["average_score"] = total_score / len(results["question_scores"]) if results["question_scores"] else 0.0
+        # Record end time
+        end_time = datetime.now()
+        results["end_timestamp"] = end_time.isoformat()
+        results["duration"] = (end_time - start_time).total_seconds()
         # Save results to JSON file
         results_file_path = os.path.join(results_dir, "benchmark_results.json")
         with open(results_file_path, "w") as file:
             json.dump(results, file, indent=2)
         # Print & return results
-        print(f"\nBenchmark completed!")
+        print(f"Benchmark completed for {self.llm.model}!")
         print(f"Average score: {results['average_score']:.3f}")
         print(f"Results saved to: {results_file_path}")
         return results
@@ -254,7 +260,7 @@ if __name__ == "__main__":
     api_key = os.getenv("OPENROUTER_API_KEY")
     # Create an instance of the Benchmark class
     benchmark = Benchmark(
-        model="qwen/qwen3-30b-a3b",
+        model="google/gemini-2.5-flash",
         endpoint="https://openrouter.ai/api/v1",
         api_key=api_key
     )
