@@ -1,5 +1,3 @@
-# Ignore Questions directory
-questions/
 # Ignore Results directory
 results/
 # Ignore .env file

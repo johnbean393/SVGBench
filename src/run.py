@@ -13,7 +13,7 @@ def main():
     load_dotenv()
     
     # Create argument parser
-    parser = argparse.ArgumentParser(description='SVGBench: A challenging contamination-free LLM benchmark that tests knowledge, coding, physical reasoning capabilities of LLMs.')
+    parser = argparse.ArgumentParser(description='SVGBench: A challenging LLM benchmark that tests knowledge, coding, physical reasoning capabilities of LLMs.')
     
     # Add command line arguments
     parser.add_argument(
