@@ -95,7 +95,7 @@ ChromeDriver is required for rendering SVG files to PNG images.
    - Note the version number
 
 2. **Download ChromeDriver:**
-   - Visit [ChromeDriver Downloads](https://chromedriver.chromium.org/downloads)
+   - Visit [ChromeDriver Downloads](https://googlechromelabs.github.io/chrome-for-testing/)
    - Download the version that matches your Chrome browser
    - Extract the downloaded file
 
