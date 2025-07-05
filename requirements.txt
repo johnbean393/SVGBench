@@ -1,0 +1,28 @@
+# SVGBench Requirements
+# Core dependencies for running the benchmark
+
+# OpenAI API client for LLM interactions
+openai>=1.0.0
+
+# Environment variable management
+python-dotenv>=0.19.0
+
+# Progress bars for benchmark execution
+tqdm>=4.64.0
+
+# Web browser automation for SVG rendering
+selenium>=4.0.0
+
+# Standard library dependencies (included with Python)
+# - json (built-in)
+# - os (built-in)
+# - sys (built-in)
+# - concurrent.futures (built-in)
+# - datetime (built-in)
+# - time (built-in)
+# - platform (built-in)
+# - re (built-in)
+# - xml.etree.ElementTree (built-in)
+# - base64 (built-in)
+# - tempfile (built-in)
+# - argparse (built-in) 

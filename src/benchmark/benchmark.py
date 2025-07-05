@@ -22,6 +22,7 @@ class Benchmark:
             api_key: str,
             open_router_api_key: str=None
     ):
+        # Initialize the LLM
         self.llm = LLM(model=model, endpoint=endpoint, api_key=api_key)
         # If the OpenRouter API key is not provided, try the API key
         self.open_router_api_key = open_router_api_key
@@ -59,7 +60,7 @@ class Benchmark:
             total=len(questions), 
             desc=f"Running benchmark for {self.llm.model}", 
             unit="question",
-            ncols=200
+            ncols=100
         )
         # Run questions in parallel with max workers
         with ThreadPoolExecutor(

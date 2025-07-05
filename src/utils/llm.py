@@ -12,10 +12,12 @@ class LLM:
             endpoint: str,
             api_key: str
     ):
+        # Initialize the OpenAI client
         self.client = OpenAI(
             api_key=api_key, 
             base_url=endpoint
         )
+        # Set the model
         self.model = model
 
     # Function to generate text from a prompt and an optional image
