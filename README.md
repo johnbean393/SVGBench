@@ -28,6 +28,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | openai-gpt-4.1-mini | 53.4% |
 | google-gemini-2.5-flash | 51.4% |
 | openai-o4-mini | 48.0% |
+| x-ai-grok-3 | 45.8% |
 | openai-o3-mini | 42.7% |
 | google-gemini-2.0-flash-001 | 41.6% |
 | google-gemini-2.0-flash-lite-001 | 39.6% |
