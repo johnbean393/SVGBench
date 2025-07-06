@@ -1,6 +1,7 @@
 {
   "models": [
     "anthropic-claude-sonnet-4",
+    "deepseek-deepseek-r1-0528",
     "google-gemini-2.0-flash-001",
     "google-gemini-2.0-flash-lite-001",
     "google-gemini-2.5-flash",
@@ -8,6 +9,7 @@
     "meta-llama-llama-3.1-8b-instruct",
     "meta-llama-llama-4-maverick",
     "meta-llama-llama-4-scout",
+    "mistralai-devstral-small",
     "mistralai-mistral-small-3.2-24b-instruct",
     "openai-gpt-4.1",
     "openai-gpt-4.1-mini",

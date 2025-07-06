@@ -2,6 +2,8 @@
 
 A challenging LLM benchmark that tests knowledge, coding, instruction following, and physical reasoning capabilities of Large Language Models through SVG generation tasks.
 
+![WebUI](https://raw.githubusercontent.com/johnbean393/SVGBench/refs/heads/main/assets/webUI.png)
+
 ## Overview
 
 SVGBench evaluates how well language models can code and reason with physical concepts by presenting them with complex SVG generation prompts and detailed requirements. The benchmark tests models' abilities to:
