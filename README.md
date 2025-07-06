@@ -24,24 +24,25 @@ SVGBench evaluates how well language models can code and reason with physical co
 
 | Model | Score |
 | :--- | ---: |
-| google-gemini-2.5-pro | 61.4% |
-| anthropic-claude-sonnet-4 | 59.4% |
-| openai-gpt-4.1 | 58.4% |
-| openai-gpt-4.1-mini | 53.4% |
-| google-gemini-2.5-flash | 51.4% |
-| openai-o4-mini | 48.0% |
-| x-ai-grok-3 | 45.8% |
-| openai-o3-mini | 42.7% |
-| google-gemini-2.0-flash-001 | 41.6% |
-| google-gemini-2.0-flash-lite-001 | 39.6% |
-| meta-llama-llama-4-maverick | 36.0% |
-| mistralai-mistral-small-3.2-24b-instruct | 35.9% |
-| openai-gpt-4.1-nano | 35.5% |
-| qwen-qwen3-235b-a22b | 33.9% |
-| qwen-qwen3-32b | 29.4% |
-| meta-llama-llama-4-scout | 26.9% |
-| qwen-qwen3-30b-a3b | 26.1% |
-| meta-llama-llama-3.1-8b-instruct | 6.8% |
+| gemini-2.5-pro | 61.4% |
+| claude-sonnet-4 | 59.4% |
+| gpt-4.1 | 58.4% |
+| gpt-4.1-mini | 53.4% |
+| gemini-2.5-flash | 51.4% |
+| o4-mini | 48.0% |
+| grok-3 | 45.8% |
+| o3-mini | 42.7% |
+| gemini-2.0-flash-001 | 41.6% |
+| deepseek-r1-0528 | 40.4% |
+| gemini-2.0-flash-lite-001 | 39.6% |
+| llama-4-maverick | 36.0% |
+| mistral-small-3.2-24b-instruct | 35.9% |
+| gpt-4.1-nano | 35.5% |
+| qwen3-235b-a22b | 33.9% |
+| qwen3-32b | 29.4% |
+| llama-4-scout | 26.9% |
+| qwen3-30b-a3b | 26.1% |
+| llama-3.1-8b-instruct | 6.8% |
 
 ## Installation
 
