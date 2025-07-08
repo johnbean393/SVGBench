@@ -1,5 +1,8 @@
 {
   "models": [
+    "anthropic-claude-3.5-haiku",
+    "anthropic-claude-3.5-sonnet",
+    "anthropic-claude-3.7-sonnet",
     "anthropic-claude-sonnet-4",
     "deepseek-deepseek-r1-0528",
     "google-gemini-2.0-flash-001",
@@ -14,6 +17,8 @@
     "openai-gpt-4.1",
     "openai-gpt-4.1-mini",
     "openai-gpt-4.1-nano",
+    "openai-gpt-4o",
+    "openai-gpt-4o-mini",
     "openai-o3-mini",
     "openai-o4-mini",
     "qwen-qwen3-235b-a22b",
