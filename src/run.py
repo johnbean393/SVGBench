@@ -27,6 +27,11 @@ def main():
         help='The OpenAI compatible endpoint to test with (default: https://openrouter.ai/api/v1)'
     )
     parser.add_argument(
+        '--open-router-endpoint',
+        default='https://openrouter.ai/api/v1',
+        help='The OpenRouter endpoint to use (default: https://openrouter.ai/api/v1)'
+    )
+    parser.add_argument(
         '--api-key',
         default=os.getenv('OPENROUTER_API_KEY'),
         help='Your API key for the endpoint'
@@ -52,7 +57,8 @@ def main():
             model=model,
             endpoint=args.endpoint,
             api_key=api_key,
-            open_router_api_key=open_router_api_key
+            open_router_api_key=open_router_api_key,
+            open_router_endpoint=args.open_router_endpoint
         )
         # Run the benchmark
         benchmark.run(run_full_benchmark=True)

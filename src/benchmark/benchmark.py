@@ -20,7 +20,8 @@ class Benchmark:
             model: str, 
             endpoint: str, 
             api_key: str,
-            open_router_api_key: str=None
+            open_router_api_key: str=None,
+            open_router_endpoint: str="https://openrouter.ai/api/v1"
     ):
         # Initialize the LLM
         self.llm = LLM(model=model, endpoint=endpoint, api_key=api_key)
@@ -28,6 +29,8 @@ class Benchmark:
         self.open_router_api_key = open_router_api_key
         if self.open_router_api_key is None:
             self.open_router_api_key = api_key
+        # Store the OpenRouter endpoint
+        self.open_router_endpoint = open_router_endpoint
 
     # Function to run a benchmark
     def run(
@@ -222,7 +225,7 @@ Requirements:
         # Init evaluator LLM
         evaluator_llm = LLM(
             model="google/gemini-2.5-flash",
-            endpoint="https://openrouter.ai/api/v1",
+            endpoint=self.open_router_endpoint,
             api_key=self.open_router_api_key
         )
         # Evaluate the PNG
