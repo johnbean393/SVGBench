@@ -24,6 +24,7 @@
     "qwen-qwen3-235b-a22b",
     "qwen-qwen3-30b-a3b",
     "qwen-qwen3-32b",
-    "x-ai-grok-3"
+    "x-ai-grok-3",
+    "x-ai-grok-4"
   ]
 }
