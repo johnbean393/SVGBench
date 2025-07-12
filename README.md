@@ -20,7 +20,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 - **Detailed Scoring**: Requirement-based evaluation system
 - **Web UI**: Built-in results visualization interface
 
-## Leaderboard (Updated 10/07/2025)
+## Leaderboard (Updated 12/07/2025)
 
 | Model | Score |
 | :--- | ---: |
@@ -34,6 +34,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | o4-mini | 48.0% |
 | claude-3.5-sonnet | 47.9% |
 | grok-3 | 45.8% |
+| kimi-k2 | 43.6% |
 | o3-mini | 42.7% |
 | gemini-2.0-flash-001 | 41.6% |
 | deepseek-r1-0528 | 40.4% |
