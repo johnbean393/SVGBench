@@ -28,9 +28,11 @@ SVGBench evaluates how well language models can code and reason with physical co
 | claude-3.7-sonnet | 60.4% |
 | claude-sonnet-4 | 59.4% |
 | gpt-4.1 | 58.4% |
+| glm-4.5 | 58.3% |
 | grok-4 | 54.4% |
 | gpt-4.1-mini | 53.4% |
 | gemini-2.5-flash | 51.4% |
+| glm-4.5-air | 48.9% |
 | qwen3-coder-480b-a35b-instruct | 48.7% |
 | qwen3-235b-a22b-instruct-2507 | 48.6% |
 | o4-mini | 48.0% |
