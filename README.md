@@ -20,10 +20,11 @@ SVGBench evaluates how well language models can code and reason with physical co
 - **Detailed Scoring**: Requirement-based evaluation system
 - **Web UI**: Built-in results visualization interface
 
-## Leaderboard (Updated 24/07/2025)
+## Leaderboard (Updated 31/07/2025)
 
 | Model | Score |
 | :--- | ---: |
+| horizon-alpha | 65.5% |
 | gemini-2.5-pro | 61.4% |
 | claude-3.7-sonnet | 60.4% |
 | claude-sonnet-4 | 59.4% |
