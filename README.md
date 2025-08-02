@@ -24,6 +24,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 
 | Model | Score |
 | :--- | ---: |
+| horizon-beta | 67.4% |
 | horizon-alpha | 65.5% |
 | gemini-2.5-pro | 61.4% |
 | claude-3.7-sonnet | 60.4% |
