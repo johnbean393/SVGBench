@@ -20,7 +20,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 - **Detailed Scoring**: Requirement-based evaluation system
 - **Web UI**: Built-in results visualization interface
 
-## Leaderboard (Updated 31/07/2025)
+## Leaderboard (Updated 06/08/2025)
 
 | Model | Score |
 | :--- | ---: |
@@ -40,6 +40,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | o4-mini | 48.0% |
 | claude-3.5-sonnet | 47.9% |
 | grok-3 | 45.8% |
+| gpt-oss-120b | 45.6% |
 | gemini-2.5-flash-lite | 43.7% |
 | kimi-k2 | 43.6% |
 | o3-mini | 42.7% |
@@ -49,6 +50,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | llama-4-maverick | 36.0% |
 | mistral-small-3.2-24b-instruct | 35.9% |
 | gpt-4.1-nano | 35.5% |
+| gpt-oss-20b | 34.7% |
 | qwen3-235b-a22b | 33.9% |
 | claude-3.5-haiku | 33.3% |
 | gpt-4o | 31.8% |
