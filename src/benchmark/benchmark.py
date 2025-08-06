@@ -21,10 +21,20 @@ class Benchmark:
             endpoint: str, 
             api_key: str,
             open_router_api_key: str=None,
-            open_router_endpoint: str="https://openrouter.ai/api/v1"
+            open_router_endpoint: str="https://openrouter.ai/api/v1",
+            reasoning_effort: str=None,
+            reasoning_max_tokens: int=None,
+            max_output_tokens: int=None
     ):
         # Initialize the LLM
-        self.llm = LLM(model=model, endpoint=endpoint, api_key=api_key)
+        self.llm = LLM(
+            model=model, 
+            endpoint=endpoint, 
+            api_key=api_key,
+            reasoning_effort=reasoning_effort,
+            reasoning_max_tokens=reasoning_max_tokens,
+            max_output_tokens=max_output_tokens
+        )
         # If the OpenRouter API key is not provided, try the API key
         self.open_router_api_key = open_router_api_key
         if self.open_router_api_key is None:

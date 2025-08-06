@@ -41,6 +41,21 @@ def main():
         default=os.getenv('OPENROUTER_API_KEY'),
         help='Your OpenRouter API key'
     )
+    parser.add_argument(
+        '--reasoning-effort',
+        choices=['high', 'medium', 'low'],
+        help='Reasoning effort level for models that support it (high, medium, low)'
+    )
+    parser.add_argument(
+        '--reasoning-max-tokens',
+        type=int,
+        help='Maximum number of tokens to use for reasoning (Anthropic-style models)'
+    )
+    parser.add_argument(
+        '--max-output-tokens',
+        type=int,
+        help='Maximum number of output tokens for the response'
+    )
     # Parse arguments
     args = parser.parse_args()
     # Get API key from argument or environment variable
@@ -58,7 +73,10 @@ def main():
             endpoint=args.endpoint,
             api_key=api_key,
             open_router_api_key=open_router_api_key,
-            open_router_endpoint=args.open_router_endpoint
+            open_router_endpoint=args.open_router_endpoint,
+            reasoning_effort=args.reasoning_effort,
+            reasoning_max_tokens=args.reasoning_max_tokens,
+            max_output_tokens=args.max_output_tokens
         )
         # Run the benchmark
         benchmark.run(run_full_benchmark=True)

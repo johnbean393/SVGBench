@@ -1,6 +1,8 @@
 from openai import OpenAI
 import base64
 import os
+import requests
+import json
 
 # Class to interact with OpenAI compatible APIs
 class LLM:
@@ -10,7 +12,10 @@ class LLM:
             self, 
             model: str, 
             endpoint: str,
-            api_key: str
+            api_key: str,
+            reasoning_effort: str = None,
+            reasoning_max_tokens: int = None,
+            max_output_tokens: int = None
     ):
         # Initialize the OpenAI client
         self.client = OpenAI(
@@ -19,6 +24,13 @@ class LLM:
         )
         # Set the model
         self.model = model
+        # Store reasoning parameters
+        self.reasoning_effort = reasoning_effort
+        self.reasoning_max_tokens = reasoning_max_tokens
+        self.max_output_tokens = max_output_tokens
+        # Store endpoint and API key for direct requests when needed
+        self.endpoint = endpoint
+        self.api_key = api_key
 
     # Function to generate text from a prompt and an optional image
     def generate_text(
@@ -62,10 +74,63 @@ class LLM:
                     "schema": json_schema
                 }
             }
+        # Add max output tokens if specified
+        if self.max_output_tokens:
+            # Use max_completion_tokens for o-series models, max_tokens for others
+            if any(model_name in self.model.lower() for model_name in ['o3', 'o4', 'o1']):
+                request_params["max_completion_tokens"] = self.max_output_tokens
+            else:
+                request_params["max_tokens"] = self.max_output_tokens
+        # Add reasoning parameters if specified
+        if self.reasoning_effort or self.reasoning_max_tokens:
+            reasoning_config = {}
+            if self.reasoning_effort:
+                reasoning_config["effort"] = self.reasoning_effort
+            if self.reasoning_max_tokens:
+                reasoning_config["max_tokens"] = self.reasoning_max_tokens
+            request_params["reasoning"] = reasoning_config
         # Generate text
-        response = self.client.chat.completions.create(**request_params)
-        # Return the generated text
-        return response.choices[0].message.content
+        # Use direct HTTP request if reasoning parameters are specified
+        if self.reasoning_effort or self.reasoning_max_tokens:
+            return self._generate_with_reasoning(request_params)
+        else:
+            response = self.client.chat.completions.create(**request_params)
+            return response.choices[0].message.content
+    
+    def _generate_with_reasoning(self, request_params):
+        """Generate text using direct HTTP request to support reasoning parameters"""
+        headers = {
+            'Authorization': f'Bearer {self.api_key}',
+            'Content-Type': 'application/json'
+        }
+        
+        try:
+            response = requests.post(
+                f"{self.endpoint}/chat/completions",
+                headers=headers,
+                json=request_params,
+                timeout=6000
+            )
+            
+            if response.status_code == 200:
+                result = response.json()
+                return result['choices'][0]['message']['content']
+            else:
+                error_msg = f"HTTP {response.status_code}: {response.text}"
+                print(f"Warning: Direct API call failed ({error_msg}). Falling back to OpenAI client without reasoning.")
+                # Fallback to OpenAI client without reasoning
+                if "reasoning" in request_params:
+                    del request_params["reasoning"]
+                fallback_response = self.client.chat.completions.create(**request_params)
+                return fallback_response.choices[0].message.content
+                
+        except Exception as e:
+            print(f"Warning: Direct API call failed ({e}). Falling back to OpenAI client without reasoning.")
+            # Fallback to OpenAI client without reasoning
+            if "reasoning" in request_params:
+                del request_params["reasoning"]
+            fallback_response = self.client.chat.completions.create(**request_params)
+            return fallback_response.choices[0].message.content
     
 # Example usage
 if __name__ == "__main__":
