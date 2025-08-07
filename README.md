@@ -20,7 +20,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 - **Detailed Scoring**: Requirement-based evaluation system
 - **Web UI**: Built-in results visualization interface
 
-## Leaderboard (Updated 06/08/2025)
+## Leaderboard (Updated 08/08/2025)
 
 | Model | Score |
 | :--- | ---: |
@@ -28,13 +28,17 @@ SVGBench evaluates how well language models can code and reason with physical co
 | horizon-alpha | 65.5% |
 | gemini-2.5-pro | 61.4% |
 | claude-3.7-sonnet | 60.4% |
+| gpt-5-mini | 59.7% |
 | claude-sonnet-4 | 59.4% |
 | gpt-4.1 | 58.4% |
 | glm-4.5 | 58.3% |
 | o3 | 56.7% |
+| gpt-5 | 56.1% # Very strange result, will re-run |
 | grok-4 | 54.4% |
 | gpt-4.1-mini | 53.4% |
 | gemini-2.5-flash | 51.4% |
+| gpt-5-chat | 50.4% |
+| gpt-5-nano | 49.7% |
 | glm-4.5-air | 48.9% |
 | qwen3-coder-480b-a35b-instruct | 48.7% |
 | qwen3-235b-a22b-instruct-2507 | 48.6% |
