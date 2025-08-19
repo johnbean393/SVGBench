@@ -36,6 +36,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | gpt-5 | 56.1% # Very strange result, will re-run |
 | grok-4 | 54.4% |
 | gpt-4.1-mini | 53.4% |
+| deepseek-v3.1 | 53.1% |
 | gemini-2.5-flash | 51.4% |
 | gpt-5-chat | 50.4% |
 | gpt-5-nano | 49.7% |
@@ -44,6 +45,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | qwen3-235b-a22b-instruct-2507 | 48.6% |
 | o4-mini | 48.0% |
 | claude-3.5-sonnet | 47.9% |
+| deepseek-v3.1 (reasoning) | 47.8% |
 | grok-3 | 45.8% |
 | gpt-oss-120b | 45.6% |
 | gemini-2.5-flash-lite | 43.7% |
