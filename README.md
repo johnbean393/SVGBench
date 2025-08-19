@@ -20,7 +20,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 - **Detailed Scoring**: Requirement-based evaluation system
 - **Web UI**: Built-in results visualization interface
 
-## Leaderboard (Updated 08/08/2025)
+## Leaderboard
 
 | Model | Score |
 | :--- | ---: |
