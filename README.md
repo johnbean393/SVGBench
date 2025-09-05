@@ -43,17 +43,22 @@ SVGBench evaluates how well language models can code and reason with physical co
 | glm-4.5-air | 48.9% |
 | qwen3-coder-480b-a35b-instruct | 48.7% |
 | qwen3-235b-a22b-instruct-2507 | 48.6% |
+| kimi-k2-0905 | 48.5% |
 | o4-mini | 48.0% |
 | claude-3.5-sonnet | 47.9% |
 | deepseek-v3.1 (reasoning) | 47.8% |
+| glm-4.5v | 46.5% |
+| mistral-medium-3.1 | 46.1% |
 | grok-3 | 45.8% |
 | gpt-oss-120b | 45.6% |
 | gemini-2.5-flash-lite | 43.7% |
 | kimi-k2 | 43.6% |
 | o3-mini | 42.7% |
 | gemini-2.0-flash-001 | 41.6% |
+| qwen3-30b-a3b-instruct-2507 | 40.9% |
 | deepseek-r1-0528 | 40.4% |
 | gemini-2.0-flash-lite-001 | 39.6% |
+| codestral-2508 | 37.9% |
 | llama-4-maverick | 36.0% |
 | mistral-small-3.2-24b-instruct | 35.9% |
 | gpt-4.1-nano | 35.5% |
