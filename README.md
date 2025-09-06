@@ -24,6 +24,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 
 | Model | Score |
 | :--- | ---: |
+| gpt-5 | 67.4% |
 | horizon-beta | 67.4% |
 | horizon-alpha | 65.5% |
 | gemini-2.5-pro | 61.4% |
@@ -33,7 +34,6 @@ SVGBench evaluates how well language models can code and reason with physical co
 | gpt-4.1 | 58.4% |
 | glm-4.5 | 58.3% |
 | o3 | 56.7% |
-| gpt-5 | 56.1% # Very strange result, will re-run |
 | grok-4 | 54.4% |
 | gpt-4.1-mini | 53.4% |
 | deepseek-v3.1 | 53.1% |
@@ -55,9 +55,13 @@ SVGBench evaluates how well language models can code and reason with physical co
 | kimi-k2 | 43.6% |
 | o3-mini | 42.7% |
 | gemini-2.0-flash-001 | 41.6% |
+| step3 | 41.4% |
 | qwen3-30b-a3b-instruct-2507 | 40.9% |
 | deepseek-r1-0528 | 40.4% |
 | gemini-2.0-flash-lite-001 | 39.6% |
+| sonoma-sky-alpha | 40.5% |
+| sonoma-dusk-alpha | 39.4% |
+| qwen3-coder-30b-a3b-instruct | 38.0% |
 | codestral-2508 | 37.9% |
 | llama-4-maverick | 36.0% |
 | mistral-small-3.2-24b-instruct | 35.9% |
@@ -66,10 +70,17 @@ SVGBench evaluates how well language models can code and reason with physical co
 | qwen3-235b-a22b | 33.9% |
 | claude-3.5-haiku | 33.3% |
 | gpt-4o | 31.8% |
+| hermes-4-405b | 31.6% |
+| gemma-3-27b-it | 29.6% |
 | qwen3-32b | 29.4% |
+| qwen3-30b-a3b-thinking-2507 | 28.4% |
 | llama-4-scout | 26.9% |
 | qwen3-30b-a3b | 26.1% |
+| gemma-3-12b-it | 25.7% |
 | gpt-4o-mini | 25.4% |
+| hermes-4-70b | 21.6% |
+| seed-oss-36b-instruct | 21.1% |
+| gemma-3-4b-it | 14.7% |
 | llama-3.1-8b-instruct | 6.8% |
 
 ## Installation
