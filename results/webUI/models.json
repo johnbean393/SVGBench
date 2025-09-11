@@ -56,6 +56,7 @@
     "qwen-qwen3-32b",
     "qwen-qwen3-coder",
     "qwen-qwen3-coder-30b-a3b-instruct",
+    "qwen-qwen3-next-80b-a3b-instruct",
     "stepfun-ai-step3",
     "x-ai-grok-3",
     "x-ai-grok-4",

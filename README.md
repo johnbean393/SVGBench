@@ -47,6 +47,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | o4-mini | 48.0% |
 | claude-3.5-sonnet | 47.9% |
 | deepseek-v3.1 (reasoning) | 47.8% |
+| qwen3-next-80b-a3b-instruct | 47.4% |
 | glm-4.5v | 46.5% |
 | mistral-medium-3.1 | 46.1% |
 | grok-3 | 45.8% |
