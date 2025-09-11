@@ -59,9 +59,10 @@ SVGBench evaluates how well language models can code and reason with physical co
 | step3 | 41.4% |
 | qwen3-30b-a3b-instruct-2507 | 40.9% |
 | deepseek-r1-0528 | 40.4% |
-| gemini-2.0-flash-lite-001 | 39.6% |
 | sonoma-sky-alpha | 40.5% |
+| gemini-2.0-flash-lite-001 | 39.6% |
 | sonoma-dusk-alpha | 39.4% |
+| qwen3-next-80b-a3b-thinking | 39.2% |
 | qwen3-coder-30b-a3b-instruct | 38.0% |
 | codestral-2508 | 37.9% |
 | llama-4-maverick | 36.0% |
