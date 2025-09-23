@@ -28,6 +28,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | horizon-beta | 67.4% |
 | horizon-alpha | 65.5% |
 | gemini-2.5-pro | 61.4% |
+| gpt-5-codex | 61.0% |
 | claude-3.7-sonnet | 60.4% |
 | gpt-5-mini | 59.7% |
 | claude-sonnet-4 | 59.4% |
@@ -39,11 +40,13 @@ SVGBench evaluates how well language models can code and reason with physical co
 | deepseek-v3.1 | 53.1% |
 | gemini-2.5-flash | 51.4% |
 | gpt-5-chat | 50.4% |
+| qwen3-coder-plus-2509 | 49.8% |
 | gpt-5-nano | 49.7% |
 | glm-4.5-air | 48.9% |
 | qwen3-coder-480b-a35b-instruct | 48.7% |
 | qwen3-235b-a22b-instruct-2507 | 48.6% |
 | kimi-k2-0905 | 48.5% |
+| deepseek-v3.1-terminus (reasoning) | 48.2% |
 | o4-mini | 48.0% |
 | claude-3.5-sonnet | 47.9% |
 | deepseek-v3.1 (reasoning) | 47.8% |
@@ -52,6 +55,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | mistral-medium-3.1 | 46.1% |
 | grok-3 | 45.8% |
 | gpt-oss-120b | 45.6% |
+| grok-4-fast | 45.3% |
 | gemini-2.5-flash-lite | 43.7% |
 | kimi-k2 | 43.6% |
 | o3-mini | 42.7% |
