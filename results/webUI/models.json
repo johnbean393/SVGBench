@@ -3,6 +3,7 @@
     "anthropic-claude-3.5-haiku",
     "anthropic-claude-3.5-sonnet",
     "anthropic-claude-3.7-sonnet",
+    "anthropic-claude-haiku-4.5",
     "anthropic-claude-sonnet-4",
     "anthropic-claude-sonnet-4.5",
     "baidu-ernie-4.5-21b-a3b",
@@ -13,7 +14,6 @@
     "deepseek-deepseek-v3.1-terminus",
     "deepseek-deepseek-v3.2-exp",
     "deepseek-reasoner",
-    "glm-4.6",
     "google-gemini-2.0-flash-001",
     "google-gemini-2.0-flash-lite-001",
     "google-gemini-2.5-flash",
@@ -73,6 +73,7 @@
     "x-ai-grok-4-fast:free",
     "z-ai-glm-4.5",
     "z-ai-glm-4.5-air",
-    "z-ai-glm-4.5v"
+    "z-ai-glm-4.5v",
+    "z-ai-glm-4.6"
   ]
 }
