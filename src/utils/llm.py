@@ -109,7 +109,7 @@ class LLM:
                 f"{self.endpoint}/chat/completions",
                 headers=headers,
                 json=request_params,
-                timeout=6000
+                timeout=1800
             )
             
             if response.status_code == 200:
