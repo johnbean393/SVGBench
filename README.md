@@ -25,6 +25,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | Model | Score |
 | :--- | ---: |
 | gpt-5 | 67.4% |
+| polaris-alpha (OpenRouter cloaked model) | 62.9% |
 | claude-sonnet-4.5 | 62.2% |
 | gemini-2.5-pro | 61.4% |
 | gpt-5-codex | 61.0% |
