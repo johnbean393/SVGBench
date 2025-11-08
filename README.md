@@ -45,6 +45,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | gemini-2.5-flash-preview-09-2025 | 52.1% |
 | gemini-2.5-flash | 51.4% |
 | deepseek-v3.2-exp | 51.3% |
+| grok-4-fast | 50.5% |
 | gpt-5-chat | 50.4% |
 | qwen3-coder-plus-2509 | 49.8% |
 | gpt-5-nano | 49.7% |
@@ -61,7 +62,6 @@ SVGBench evaluates how well language models can code and reason with physical co
 | mistral-medium-3.1 | 46.1% |
 | grok-3 | 45.8% |
 | gpt-oss-120b | 45.6% |
-| grok-4-fast | 45.3% |
 | gemini-2.5-flash-lite | 43.7% |
 | kimi-k2 | 43.6% |
 | o3-mini | 42.7% |
