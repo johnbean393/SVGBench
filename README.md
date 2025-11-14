@@ -24,10 +24,12 @@ SVGBench evaluates how well language models can code and reason with physical co
 
 | Model | Score |
 | :--- | ---: |
-| gpt-5 | 67.4% |
-| polaris-alpha (OpenRouter cloaked model) | 62.9% |
+| gpt-5.1 (high) | 67.5% |
+| gpt-5 (high) | 67.4% |
+| gpt-5.1 (medium) | 64.7% |
 | claude-sonnet-4.5 | 62.2% |
 | gemini-2.5-pro | 61.4% |
+| gpt-5.1-codex (medium) | 61.8% |
 | gpt-5-codex | 61.0% |
 | glm-4.6 | 60.5% |
 | claude-3.7-sonnet | 60.4% |
@@ -40,6 +42,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | kimi-k2-thinking | 57.1% |
 | o3 | 56.7% |
 | grok-4 | 54.4% |
+| gpt-5.1-codex-mini (medium) | 54.0% |
 | gpt-4.1-mini | 53.4% |
 | deepseek-v3.1 | 53.1% |
 | gemini-2.5-flash-preview-09-2025 | 52.1% |
@@ -59,6 +62,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | deepseek-v3.1 (reasoning) | 47.8% |
 | qwen3-next-80b-a3b-instruct | 47.4% |
 | glm-4.5v | 46.5% |
+| gpt-5.1-chat | 46.3% |
 | mistral-medium-3.1 | 46.1% |
 | grok-3 | 45.8% |
 | gpt-oss-120b | 45.6% |
