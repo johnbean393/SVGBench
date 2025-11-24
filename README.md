@@ -24,6 +24,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 
 | Model | Score |
 | :--- | ---: |
+| claude-opus-4.5 | 71.5% |
 | gemini-3-pro-preview | 68.7% |
 | gpt-5.1 (high) | 67.5% |
 | gpt-5 (high) | 67.4% |
