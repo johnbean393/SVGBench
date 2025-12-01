@@ -103,6 +103,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | hermes-4-70b | 21.6% |
 | seed-oss-36b-instruct | 21.1% |
 | gemma-3-4b-it | 14.7% |
+| trinity-mini | 8.7% |
 | llama-3.1-8b-instruct | 6.8% |
 
 ## Installation
