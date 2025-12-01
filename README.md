@@ -53,6 +53,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | deepseek-v3.2-exp | 51.3% |
 | grok-4-fast | 50.5% |
 | gpt-5-chat | 50.4% |
+| deepseek-v3.2 | 49.8% |
 | qwen3-coder-plus-2509 | 49.8% |
 | gpt-5-nano | 49.7% |
 | glm-4.5-air | 48.9% |
