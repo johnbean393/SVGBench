@@ -1,5 +1,6 @@
 {
   "models": [
+    "amazon-nova-2-lite-v1",
     "anthropic-claude-3.5-haiku",
     "anthropic-claude-3.5-sonnet",
     "anthropic-claude-3.7-sonnet",

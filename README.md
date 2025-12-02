@@ -91,7 +91,9 @@ SVGBench evaluates how well language models can code and reason with physical co
 | gpt-4.1-nano | 35.5% |
 | gpt-oss-20b | 34.7% |
 | qwen3-235b-a22b | 33.9% |
+| nova-2-lite-v1 (non-thinking) | 33.9% |
 | claude-3.5-haiku | 33.3% |
+| nova-2-lite-v1 (thinking) | 32.0% |
 | gpt-4o | 31.8% |
 | hermes-4-405b | 31.6% |
 | gemma-3-27b-it | 29.6% |
