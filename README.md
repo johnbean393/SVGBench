@@ -68,6 +68,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | glm-4.5v | 46.5% |
 | gpt-5.1-chat | 46.3% |
 | mistral-medium-3.1 | 46.1% |
+| mistral-large-2512 | 46.0% |
 | grok-3 | 45.8% |
 | gpt-oss-120b | 45.6% |
 | gemini-2.5-flash-lite | 43.7% |
