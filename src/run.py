@@ -43,7 +43,7 @@ def main():
     )
     parser.add_argument(
         '--reasoning-effort',
-        choices=['high', 'medium', 'low'],
+        choices=['xhigh', 'high', 'medium', 'low'],
         help='Reasoning effort level for models that support it (high, medium, low)'
     )
     parser.add_argument(
