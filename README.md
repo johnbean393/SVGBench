@@ -32,6 +32,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 | gpt-5 (high) | 67.4% |
 | gpt-5.1 (medium) | 64.7% |
 | gemini-3-flash-preview | 64.1% |
+| glm-4.7 | 62.4% |
 | claude-sonnet-4.5 | 62.2% |
 | gemini-2.5-pro | 61.4% |
 | gpt-5.1-codex (medium) | 61.8% |
