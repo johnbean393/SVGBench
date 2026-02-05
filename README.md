@@ -24,6 +24,7 @@ SVGBench evaluates how well language models can code and reason with physical co
 
 | Model | Score |
 | :--- | ---: |
+| claude-opus-4.6 (medium) | 75.6% |
 | gpt-5.2 (xhigh) | 74.4% |
 | claude-opus-4.5 (non-thinking) | 72.0% |
 | claude-opus-4.5 (thinking) | 71.5% |

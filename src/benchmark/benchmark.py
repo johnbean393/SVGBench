@@ -42,6 +42,33 @@ class Benchmark:
         # Store the OpenRouter endpoint
         self.open_router_endpoint = open_router_endpoint
 
+    # Function to load cached results from a previous benchmark run
+    def _load_cached_results(self, results_dir: str) -> dict:
+        """Load cached benchmark results if they exist. Returns cached results dict or None."""
+        results_file_path = os.path.join(results_dir, "benchmark_results.json")
+        if not os.path.exists(results_file_path):
+            return None
+        try:
+            with open(results_file_path, "r") as file:
+                cached = json.load(file)
+            # Validate the cached results have the expected structure
+            if "question_scores" in cached and "model" in cached:
+                return cached
+        except (json.JSONDecodeError, KeyError) as e:
+            print(f"Warning: Could not load cached results ({e}). Starting fresh.")
+        return None
+
+    # Function to get the set of successfully completed question indices from cached results
+    def _get_completed_indices(self, cached_results: dict) -> set:
+        """Return the set of question indices that completed successfully (have a score and no error)."""
+        completed = set()
+        for entry in cached_results.get("question_scores", []):
+            # Consider a question completed if it has a score > 0 and no error
+            # Questions that errored out (score 0 with error key) will be retried
+            if "error" not in entry:
+                completed.add(entry["question_index"])
+        return completed
+
     # Function to run a benchmark
     def run(
             self,
@@ -58,6 +85,22 @@ class Benchmark:
         # Create results directory
         results_dir = f"results/{self.llm.model.replace('/', '-')}"
         os.makedirs(results_dir, exist_ok=True)
+        # Check for cached results from a previous run
+        cached_results = self._load_cached_results(results_dir)
+        cached_scores = {}  # Map of question_index -> score entry
+        if cached_results is not None:
+            completed_indices = self._get_completed_indices(cached_results)
+            # Build a lookup of cached scores by question index
+            for entry in cached_results.get("question_scores", []):
+                if entry["question_index"] in completed_indices:
+                    cached_scores[entry["question_index"]] = entry
+            if cached_scores:
+                print(f"Resuming benchmark for {self.llm.model}: {len(cached_scores)}/{len(questions)} questions already completed.")
+        # Determine which questions still need to be run
+        questions_to_run = [
+            (index, question) for index, question in enumerate(questions)
+            if index not in cached_scores
+        ]
         # Record start time
         start_time = datetime.now()
         # Initialize results tracking
@@ -68,46 +111,54 @@ class Benchmark:
             "question_scores": [],
             "average_score": 0.0
         }
-        # Initialize progress bar
-        progress_bar = tqdm(
-            total=len(questions), 
-            desc=f"Running benchmark for {self.llm.model}", 
-            unit="question",
-            ncols=100
-        )
-        # Run questions in parallel with max workers
-        with ThreadPoolExecutor(
-            max_workers=max_workers
-        ) as executor:
-            # Submit all questions to the executor
-            future_to_question = {
-                executor.submit(self._run_question_with_retry, question, index): (question, index)
-                for index, question in enumerate(questions)
-            }
-            # Process completed futures
-            for future in as_completed(future_to_question):
-                question, index = future_to_question[future]
-                try:
-                    score = future.result()
-                    results["question_scores"].append({
-                        "question_index": index,
-                        "prompt": question["prompt"],
-                        "requirements": question["requirements"],
-                        "score": score
-                    })
-                except Exception as e:
-                    progress_bar.write(f"Failed to complete question {index} after retries: {e}")
-                    results["question_scores"].append({
-                        "question_index": index,
-                        "prompt": question["prompt"],
-                        "requirements": question["requirements"],
-                        "score": 0.0,
-                        "error": str(e)
-                    })
-                finally:
-                    progress_bar.update(1)
-        # Close the progress bar
-        progress_bar.close()
+        # Add cached scores to results
+        results["question_scores"].extend(cached_scores.values())
+        # Only run remaining questions if there are any
+        if questions_to_run:
+            # Initialize progress bar for remaining questions
+            progress_bar = tqdm(
+                total=len(questions_to_run), 
+                desc=f"Running benchmark for {self.llm.model}", 
+                unit="question",
+                ncols=100
+            )
+            # Run questions in parallel with max workers
+            with ThreadPoolExecutor(
+                max_workers=max_workers
+            ) as executor:
+                # Submit only the remaining questions to the executor
+                future_to_question = {
+                    executor.submit(self._run_question_with_retry, question, index): (question, index)
+                    for index, question in questions_to_run
+                }
+                # Process completed futures
+                for future in as_completed(future_to_question):
+                    question, index = future_to_question[future]
+                    try:
+                        score = future.result()
+                        results["question_scores"].append({
+                            "question_index": index,
+                            "prompt": question["prompt"],
+                            "requirements": question["requirements"],
+                            "score": score
+                        })
+                    except Exception as e:
+                        progress_bar.write(f"Failed to complete question {index} after retries: {e}")
+                        results["question_scores"].append({
+                            "question_index": index,
+                            "prompt": question["prompt"],
+                            "requirements": question["requirements"],
+                            "score": 0.0,
+                            "error": str(e)
+                        })
+                    finally:
+                        progress_bar.update(1)
+                        # Save intermediate results after each question completes
+                        self._save_results(results, results_dir)
+            # Close the progress bar
+            progress_bar.close()
+        else:
+            print(f"All {len(questions)} questions already completed. Using cached results.")
         # Sort results by question index to maintain order
         results["question_scores"].sort(key=lambda x: x["question_index"])
         # Calculate average score
@@ -117,15 +168,27 @@ class Benchmark:
         end_time = datetime.now()
         results["end_timestamp"] = end_time.isoformat()
         results["duration"] = (end_time - start_time).total_seconds()
-        # Save results to JSON file
-        results_file_path = os.path.join(results_dir, "benchmark_results.json")
-        with open(results_file_path, "w") as file:
-            json.dump(results, file, indent=2)
+        # Save final results to JSON file
+        results_file_path = self._save_results(results, results_dir)
         # Print & return results
         print(f"Benchmark completed for {self.llm.model}!")
         print(f"Average score: {results['average_score']:.3f}")
         print(f"Results saved to: {results_file_path}")
         return results
+
+    # Function to save results to JSON file (used for both intermediate and final saves)
+    def _save_results(self, results: dict, results_dir: str) -> str:
+        """Save results to the benchmark_results.json file. Returns the file path."""
+        # Sort before saving to maintain consistent order
+        results["question_scores"].sort(key=lambda x: x["question_index"])
+        # Recalculate average score
+        total_score = sum(item["score"] for item in results["question_scores"])
+        results["average_score"] = total_score / len(results["question_scores"]) if results["question_scores"] else 0.0
+        # Write to file
+        results_file_path = os.path.join(results_dir, "benchmark_results.json")
+        with open(results_file_path, "w") as file:
+            json.dump(results, file, indent=2)
+        return results_file_path
 
     # Function to run a single question with retry logic
     def _run_question_with_retry(
@@ -167,6 +230,22 @@ class Benchmark:
             requirements: str, 
             index: int
     ):
+        # Check if SVG and PNG already exist from a previous run
+        results_dir = f"results/{self.llm.model.replace('/', '-')}"
+        svg_path = os.path.join(results_dir, f"question_{index}.svg")
+        png_path = os.path.join(results_dir, f"question_{index}.png")
+        # If both files exist, skip generation entirely
+        if os.path.exists(svg_path) and os.path.exists(png_path):
+            tqdm.write(f"Using cached SVG/PNG for question {index}")
+            return
+        # If only SVG exists, re-render the PNG from it
+        if os.path.exists(svg_path):
+            tqdm.write(f"Re-rendering PNG from cached SVG for question {index}")
+            with open(svg_path, "r") as file:
+                svg_code = file.read()
+            SVGRenderer.render_svg(svg_code, results_dir, f"question_{index}")
+            return
+        # Otherwise, generate from scratch
         generate_prompt = f"""
 {prompt} Wrap the SVG code in an SVG code block following the example below.
 
@@ -205,7 +284,6 @@ Requirements:
             # Throw an error
             raise ValueError("Error extracting SVG code")
         # Create the results directory if it doesn't exist
-        results_dir = f"results/{self.llm.model.replace('/', '-')}"
         os.makedirs(results_dir, exist_ok=True)
         # Render the SVG code to an image
         SVGRenderer.render_svg(svg_code, results_dir, f"question_{index}")
