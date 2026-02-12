@@ -6,6 +6,7 @@
     "anthropic-claude-3.7-sonnet",
     "anthropic-claude-haiku-4.5",
     "anthropic-claude-opus-4.5",
+    "anthropic-claude-opus-4.6",
     "anthropic-claude-sonnet-4",
     "anthropic-claude-sonnet-4.5",
     "arcee-ai-trinity-mini",
@@ -34,6 +35,7 @@
     "meta-llama-llama-4-maverick",
     "meta-llama-llama-4-scout",
     "minimax-minimax-m2.1",
+    "minimax-minimax-m2.5",
     "minimax-minimax-m2:free",
     "mistralai-codestral-2508",
     "mistralai-devstral-small",
@@ -93,6 +95,7 @@
     "z-ai-glm-4.5-air",
     "z-ai-glm-4.5v",
     "z-ai-glm-4.6",
-    "z-ai-glm-4.7"
+    "z-ai-glm-4.7",
+    "z-ai-glm-5"
   ]
 }

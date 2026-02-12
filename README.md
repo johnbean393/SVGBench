@@ -28,10 +28,12 @@ SVGBench evaluates how well language models can code and reason with physical co
 | gpt-5.2 (xhigh) | 74.4% |
 | claude-opus-4.5 (non-thinking) | 72.0% |
 | claude-opus-4.5 (thinking) | 71.5% |
+| glm-5 | 70.3% |
 | gemini-3-pro-preview | 68.7% |
 | kimi-k2.5 | 67.5% |
 | gpt-5.1 (high) | 67.5% |
 | gpt-5 (high) | 67.4% |
+| minimax-m2.5 | 65.0% |
 | gpt-5.1 (medium) | 64.7% |
 | gemini-3-flash-preview | 64.1% |
 | minimax-m2.1 | 63.1% |
